@@ -8,7 +8,7 @@ Introduction:
 
 Kaip paleisti programą?
 1. Išsisaugoti kodą kaip Python .py failą (coctails.py)
-2. Tame pačiame aplankale turi būti csv failas (coctails.csv), jame turėtų būti kokteilių receptai, tokiu formatu. ![CSV failo fragmentas su duomenimis](csv_fragmentas1.jpg) 
+2. Tame pačiame aplankale turi būti csv failas (coctails.csv), jame turėtų būti kokteilių receptai, tokiu formatu. ![csv_fragmentas1](https://github.com/user-attachments/assets/85232363-b4b4-4ade-bf70-9b6e958d1c42)
 3. Įsitikinti, kad turite įdiegtą Python.
 4. Atidaryti terminalą ir paleisti programą.
 
