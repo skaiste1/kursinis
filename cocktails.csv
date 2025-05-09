@@ -1,0 +1,57 @@
+cocktail_name,ingredient_type,ingredient_name,amount,price_per_unit,extra_info,substitutes,amount_needed
+
+Mojito,Alcohol,Rum,40,5,40%,Vodka,1
+Mojito,Syrups,Sugar_Syrup,20,1,,Honey_Syrup,1
+Mojito,Juice,Lime_Juice,40,1,True,Lemon_Juice,1
+Mojito,Component,Mineral_Water,100,0.5,,Tonic,1
+Mojito,Garnish,Mint,5,0.1,leaves,1,
+
+Espresso_Martini,Alcohol,Coffee_Liquer,40,5,40%,Bailey's,1
+Espresso_Martini,Alcohol,Vodka,40,5,40%,Tequila,1
+Espresso_Martini,Component,Coffee,30,2.5,,,1
+Espresso_Martini,Garnish,Coffee_Bean,3,0.1,beans,,1
+
+Aperol_Spritz,Alcohol,Aperol_Liquer,40,3.5,11%,Campari,1
+Aperol_Spritz,Alcohol,Prosseco,100,4,12%,,1
+Aperol_Spritz,Component,Mineral_Water,60,0.5,,Tonic,1
+Aperol_Spritz,Garnish,Orange,1,0.1,slice,Olive,1
+
+Campari_Spritz,Alcohol,Campari_Vermouth,40,3.5,25%, "Aperol Limoncella",1
+Campari_Spritz,Alcohol,Prosseco,100,4,12%, ,1
+Campari_Spritz,Component,Mineral_Water,60,0.5,", Tonic",1
+Campari_Spritz,Garnish,Orange,1,0.1,slice, Olive,1
+
+Limoncella_Spritz,Alcohol,Limoncella_Liquer,40,3.5,25%,"Campari Aperol",1
+Limoncella_Spritz,Alcohol,Prosseco,100,4,12%,,1
+Limoncella_Spritz,Component,Mineral_Water,60,0.5,,Tonic,1
+Limoncella_Spritz,Garnish,Lemon,1,0.1,slice,Lime,1
+
+Cherry_Americano,Alcohol,Cherry_Liquer,30,4,32%,,1
+Cherry_Americano,Alcohol,Campari_Vermouth,30,4,25%,,1
+Cherry_Americano,Component,Mineral_Water,100,0.5,,"Tonic Sprite",1
+
+Negroni,Alcohol,Cherry_Liquer,30,3,32%,,1
+Negroni,Alcohol,Campari_Vermouth,30,3,25%,,1
+Negroni,Alcohol,Martini_Vermouth,30,3,15%,,1
+Negroni,Garnish,Orange,1,0.1,peel,Olive,1
+
+Mimosa,Alcohol,Cointreau_Liquer,10,2,40%,Orange_Syrup,1
+Mimosa,Alcohol,Prosseco,100,4,12%,,1
+Mimosa,Juice,Orange_Juice,50,2,"True False",,1
+
+Long_Island_Ice_Tea,Alcohol,Vodka,20,2,40%, Tequila,1
+Long_Island_Ice_Tea,Alcohol,Triple_Sec,20,2,25%, ,1
+Long_Island_Ice_Tea,Alcohol,Gin,20,2,40%, ,1
+Long_Island_Ice_Tea,Alcohol,Rum,20,2,40%, ,1
+Long_Island_Ice_Tea,Alcohol,Tequila,20,2,40%, Vodka,1
+Long_Island_Ice_Tea,Juice,Lime_Juice,40,1,True, Lemon_Juice,1
+Long_Island_Ice_Tea,Garnish,Lime,1,0.1,slice, Lemon,1
+
+Culta_La_Vida,Alcohol,Rum,40,5,40%, Tequila,1
+Culta_La_Vida,Alcohol,Banana_Liquer,20,1.5,20%, Syrup,1
+Culta_La_Vida,Syrups,Sugar_Syrup,20,1,, Honey_Syrup,1
+Culta_La_Vida,Juice,Lime_Juice,40,0.5,True, Lemon_Juice,1
+Culta_La_Vida,Juice,Cranberry_Juice,50,1,"False, True",,1
+Culta_La_Vida,Garnish,Lime,1,0.1,slice, Lemon,1
+
+

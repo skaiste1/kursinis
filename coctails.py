@@ -138,13 +138,13 @@ class Coctail:
     def is_makeable(self, inventory):
         new_ingredients=[]
         missing_ingredients =[]
-        normalized_inventory = [item.lower().replace("_", " ") for item in inventory]
+        inventory_dict = {item._name.lower().replace("_", " "): item for item in inventory}
 
         for ingredient in self._ingredients:
-            ing_name = ingredient.get_name().lower()
+            ing_name = ingredient.get_name().lower().replace("_", " ")
             
-            if ing_name not in normalized_inventory:
-                substitute = ingredient.get_substitute(normalized_inventory)
+            if ing_name not in inventory_dict:
+                substitute = ingredient.get_substitute(inventory_dict)
 
                 if substitute:
                     print(f"Changing {ingredient.get_name()} to {substitute}")
@@ -276,31 +276,50 @@ def read_cocktails_from_csv(filename="cocktails.csv"):
     try:
         with open(filename, 'r', encoding='utf-8') as file:
             reader = csv.reader(file)
+            header = next(reader)  
+
+            cocktail_name_idx = header.index("coctail_name")
+            ingredient_type_idx = header.index("ingredient_type")
+            ingredient_name_idx = header.index("ingredient_name")
+            amount_idx = header.index("amount")
+            price_per_unit_idx = header.index("price_per_unit")
+            extra_info_idx = header.index("extra_info")
+            substitutes_idx = header.index("substitutes")
+            amount_needed_idx = header.index("amount_needed")
+
             cocktail_rows = []
             current_cocktail_name = None
 
             for row in reader:
-                if not row:
+                if not row: 
                     continue
-                cocktail_name = row[0].strip()
+
+                cocktail_name = row[cocktail_name_idx].strip()
+
+            
                 if current_cocktail_name != cocktail_name:
-                    if cocktail_rows:
+                    if cocktail_rows:  
                         cocktail = create_cocktail_from_csv(cocktail_rows)
                         cocktails[current_cocktail_name] = cocktail
-                    cocktail_rows = [row]
+                    cocktail_rows = [row]  
                     current_cocktail_name = cocktail_name
                 else:
-                    cocktail_rows.append(row)
-            if cocktail_rows: 
+                    cocktail_rows.append(row)  
+
+           
+            if cocktail_rows:
                 cocktail = create_cocktail_from_csv(cocktail_rows)
                 cocktails[current_cocktail_name] = cocktail
+
     except FileNotFoundError:
         print(f"Error: The file '{filename}' was not found.")
     except csv.Error as e:
         print(f"Error reading CSV file: {e}")
     except Exception as e:
         print(f"An unexpected error occurred while reading the file: {e}")
-    return cocktails     
+
+    return cocktails
+
 
 def write_cocktail_to_csv(cocktail, filename="cocktails.csv"):
     try:
@@ -346,10 +365,131 @@ def write_cocktail_to_csv(cocktail, filename="cocktails.csv"):
         print(f"An error occurred while writing to CSV file: {e}")
 
 
+import csv
 
 
 
+def read_cocktails_from_csv(filename="cocktails.csv"):
+ 
+    cocktails = {}
+    try:
+        with open(filename, 'r', encoding='utf-8') as file:
+            reader = csv.reader(file)
+            header = next(reader)  
+            
+            cocktail_name_idx = header.index("cocktail_name")
+            ingredient_type_idx = header.index("ingredient_type")
+            ingredient_name_idx = header.index("ingredient_name")
+            amount_idx = header.index("amount")
+            price_per_unit_idx = header.index("price_per_unit")
+            extra_info_idx = header.index("extra_info")
+            substitutes_idx = header.index("substitutes")
+            amount_needed_idx = header.index("amount_needed")
+            
+            cocktail_rows = []
+            current_cocktail_name = None
 
-    
+            for row in reader:
+                if not row:
+                    continue
+
+                cocktail_name = row[cocktail_name_idx].strip()
+
+                if current_cocktail_name != cocktail_name:
+                    if cocktail_rows:  
+                        cocktail = create_cocktail_from_csv(cocktail_rows)
+                        cocktails[current_cocktail_name] = cocktail
+                    cocktail_rows = [row]  
+                    current_cocktail_name = cocktail_name
+                else:
+                    cocktail_rows.append(row)  
+
+            if cocktail_rows:
+                cocktail = create_cocktail_from_csv(cocktail_rows)
+                cocktails[current_cocktail_name] = cocktail
+
+    except FileNotFoundError:
+        print(f"Error: The file '{filename}' was not found.")
+    except csv.Error as e:
+        print(f"Error reading CSV file: {e}")
+    except Exception as e:
+        print(f"An unexpected error occurred while reading the file: {e}")
+
+    return cocktails
 
 
+def main():
+    inventory = Inventory()
+    cocktails = read_cocktails_from_csv()
+
+    while True:
+        print("\nCocktail Management system")
+        print("1. Rodyti visus galimus kokteilius")
+        print("2. Patikrinti, ar galima pagaminti kokteilį")
+        print("3. Rodyti kokteilio receptą ir kainą")
+        print("4. Pridėti ingredientą į inventorių")
+        print("5. Peržiūrėti inventorių")
+        print("6. Išeiti")
+
+        choice = input("Pasirinkite veiksmą: ")
+
+        if choice == "1":
+            print("\nGalimi kokteiliai:")
+            for name in sorted(cocktails.keys()):
+                print(f"- {name}")
+
+        elif choice == "2":
+            cocktail_name = input("Įveskite kokteilio pavadinimą, kurį norite patikrinti: ").title()
+            if cocktail_name in cocktails:
+                result = cocktails[cocktail_name].is_makeable(inventory.get_inventory_items())
+                print(result)
+            else:
+                print("Tokio kokteilio neradome.")
+
+        elif choice == "3":
+            cocktail_name = input("Įveskite kokteilio pavadinimą, kurio receptą norite pamatyti: ").title()
+            if cocktail_name in cocktails:
+                print(cocktails[cocktail_name].show_recipe())
+                total_price = cocktails[cocktail_name].get_total_price()
+                print(f"Bendra kaina: {total_price:.2f} Eur")
+                has_discount = input("Ar turite nuolaidą? (taip/ne): ").lower()
+                if has_discount == "taip":
+                    try:
+                        discount = float(input("Įveskite nuolaidos procentą (pvz., 10): ")) / 100
+                        discounted_cocktail = DiscountedCoctail(cocktails[cocktail_name], discount)
+                        discounted_price = discounted_cocktail.get_total_price()
+                        print(f"Kaina su {discount * 100:.0f}% nuolaida: {discounted_price:.2f} Eur")
+                    except ValueError:
+                        print("Neteisingas nuolaidos formatas.")
+            else:
+                print("Tokio kokteilio neradome.")
+
+        elif choice == "4":
+            name = input("Įveskite ingrediento pavadinimą: ")
+            try:
+                amount = float(input("Įveskite kiekį (pvz., 100): "))
+                price = float(input("Įveskite vieneto kainą: "))
+                # Sukuriame bazinį Ingredient objektą, galite patobulinti pagal tipą
+                ingredient = Component(name, amount, price)
+                inventory.add(ingredient)
+                print(f"Ingredientas '{name}' pridėtas į inventorių.")
+            except ValueError:
+                print("Neteisingas kiekio arba kainos formatas.")
+
+        elif choice == "5":
+            if inventory.get_inventory_items():
+                print("\nDabartinis inventorius:")
+                for item in inventory.get_inventory_items():
+                    print(f"- {item.show_info()}")
+            else:
+                print("Inventorius tuščias.")
+
+        elif choice == "6":
+            print("Viso gero!")
+            break
+
+        else:
+            print("Netinkamas pasirinkimas. Bandykite dar kartą.")
+
+if __name__ == "__main__":
+    main()
